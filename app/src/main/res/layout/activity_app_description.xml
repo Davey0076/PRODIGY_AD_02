@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AppDescription">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:text="MyToDo"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/descriptionPageImage"
+        android:layout_marginBottom="60dp"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/loadscreen1"
+        android:layout_centerInParent="true"
+        android:id="@+id/descriptionPageImage"/>
+
+    <TextView
+        android:id="@+id/descriptionPageText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionPageImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:text="Quickly manage and organize your tasks"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/descriptionPageText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionPageText1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="An easy to use app that allows creation, deletion and updating of daily tasks"
+        android:gravity="center"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRedirectLogin"
+        android:layout_below="@+id/descriptionPageText2"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#FF9800"
+        android:text="LOGIN"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"
+        android:layout_alignParentEnd="true"
+        android:padding="10dp"
+        android:layout_marginRight="30dp"/>
+
+
+
+</RelativeLayout>

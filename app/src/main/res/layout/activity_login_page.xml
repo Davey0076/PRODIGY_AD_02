@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginPage"
+    android:layout_margin="12dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:id="@+id/textLogin"
+        android:textSize="40dp"
+        android:text="Login"
+        android:layout_margin="10dp"
+        android:padding="10dp"/>
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailAddress"
+        android:layout_below="@+id/textLogin"
+        android:hint="email address"
+        android:background="@drawable/edittext_background"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:layout_below="@+id/emailAddress"
+        android:hint="password"
+        android:background="@drawable/edittext_background"
+        android:layout_margin="10dp"/>
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogin"
+        android:backgroundTint="#FF9800"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:text="LOGIN"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_medium"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New user? Register below."
+        android:id="@+id/descriptionRegister"
+        android:layout_below="@id/btnLogin"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_medium"/>
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegister"
+        android:backgroundTint="#FF9800"
+        android:layout_below="@id/descriptionRegister"
+        android:layout_centerHorizontal="true"
+        android:text="REGISTER"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"/>
+
+</RelativeLayout>
