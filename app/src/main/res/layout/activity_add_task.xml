@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTask"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textTitle"
+        android:text="Add Task"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:textSize="40sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task Name"
+        android:background="@drawable/edittext_background"
+        android:layout_below="@id/textTitle"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etTaskDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Add short description of the task"
+        android:lines="5"
+        android:background="@drawable/edittext_background"
+        android:layout_below="@id/etTaskName"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etTaskCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task Category eg Shopping, Schoolwork et"
+        android:layout_below="@id/etTaskDescription"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/edittext_background"/>
+
+    <Button
+        android:id="@+id/btnSelectDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:layout_below="@id/etTaskCategory"
+        android:backgroundTint="#FF9800"
+        android:drawableEnd="@drawable/ic_date"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvSelectedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No date selected"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_below="@id/btnSelectDate"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnSelectTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Time"
+        android:backgroundTint="#FF9800"
+        android:textSize="20sp"
+        android:drawableEnd="@drawable/ic_time"
+        android:layout_below="@id/tvSelectedDate"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvSelectedTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No time selected"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_below="@id/btnSelectTime"
+        android:layout_marginBottom="16dp"/>
+
+    <Switch
+        android:id="@+id/switchReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Reminder"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_below="@id/tvSelectedTime"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnSaveTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Task"
+        android:backgroundTint="#FF9800"
+        android:textSize="20sp"
+        android:layout_below="@id/switchReminder"
+        android:layout_marginBottom="16dp"/>
+</RelativeLayout>

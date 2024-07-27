@@ -4,68 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginPage"
+    tools:context=".Registration"
     android:layout_margin="12dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/txtRegister"
+        android:text="Register"
         android:fontFamily="@font/roboto_condensed_bold"
-        android:id="@+id/textLogin"
-        android:textSize="40dp"
-        android:text="Login"
+        android:textSize="40sp"
         android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/userName"
+        android:hint="Enter preferred username"
+        android:background="@drawable/edittext_background"
+        android:layout_below="@+id/txtRegister"
+        android:layout_margin="10dp"/>
 
     <EditText
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:id="@+id/emailAddress"
-        android:layout_below="@+id/textLogin"
         android:hint="email address"
         android:background="@drawable/edittext_background"
+        android:layout_below="@+id/userName"
         android:layout_margin="10dp"/>
 
     <EditText
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:id="@+id/password"
-        android:layout_below="@+id/emailAddress"
-        android:hint="password"
+        android:hint="new password"
         android:background="@drawable/edittext_background"
+        android:layout_below="@+id/emailAddress"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/repeatPassword"
+        android:hint="repeat password"
+        android:background="@drawable/edittext_background"
+        android:layout_below="@+id/password"
         android:layout_margin="10dp"/>
 
     <Button
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:backgroundTint="#FF9800"
-        android:layout_below="@+id/password"
-        android:layout_marginTop="60dp"
+        android:layout_below="@id/repeatPassword"
         android:layout_centerHorizontal="true"
-        android:text="LOGIN"
+        android:layout_marginTop="60dp"
+        android:text="REGISTER"
         android:textSize="20sp"
         android:fontFamily="@font/roboto_medium"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New user? Register below."
-        android:id="@+id/descriptionRegister"
-        android:layout_below="@id/btnLogin"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:fontFamily="@font/roboto_medium"/>
-    <Button
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnRedirectRegister"
-        android:backgroundTint="#FF9800"
-        android:layout_below="@id/descriptionRegister"
-        android:layout_centerHorizontal="true"
-        android:text="REGISTER"
-        android:fontFamily="@font/roboto_medium"
-        android:textSize="20sp"/>
+
+
 
 </RelativeLayout>

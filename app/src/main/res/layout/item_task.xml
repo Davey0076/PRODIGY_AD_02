@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:textStyle="bold"
+        tools:text="Task Name" />
+
+    <TextView
+        android:id="@+id/tvTaskDescription"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTaskName"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/roboto_medium"
+        tools:text="Task Description" />
+
+    <TextView
+        android:id="@+id/tvTaskCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:fontFamily="@font/roboto_medium"
+        android:background="#673AB7"
+        android:layout_margin="5dp"
+        android:textColor="#fff"
+        android:layout_below="@id/tvTaskDescription"
+        tools:text="Task Category" />
+
+    <TextView
+        android:id="@+id/tvTaskDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTaskCategory"
+        android:layout_margin="5dp"
+        android:padding="3dp"
+        android:textColor="#fff"
+        android:fontFamily="@font/roboto_medium"
+        android:drawableStart="@drawable/ic_date"
+        android:background="#BC0404"
+        tools:text="Task Date and Time" />
+
+    <Button
+        android:id="@+id/btnUpdateTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/tvTaskName"
+        android:text="Update"
+        android:backgroundTint="#FF9800"
+        android:drawableEnd="@drawable/ic_update"
+        />
+
+    <Button
+        android:id="@+id/btnDeleteTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/btnUpdateTask"
+        android:text="Delete"
+        android:backgroundTint="#FF9800"
+        android:drawableEnd="@drawable/ic_delete"
+        android:layout_marginTop="8dp"/>
+</RelativeLayout>
