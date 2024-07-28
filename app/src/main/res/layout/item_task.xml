@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:backgroundTint="#D8D8D8"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
     <TextView
         android:id="@+id/tvTaskName"
@@ -12,7 +22,7 @@
         android:textSize="18sp"
         android:fontFamily="@font/roboto_condensed_bold"
         android:textStyle="bold"
-        tools:text="Task Name" />
+        android:text="Task Name" />
 
     <TextView
         android:id="@+id/tvTaskDescription"
@@ -24,7 +34,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/roboto_medium"
-        tools:text="Task Description" />
+        android:text="Task Description" />
 
     <TextView
         android:id="@+id/tvTaskCategory"
@@ -36,27 +46,28 @@
         android:layout_margin="5dp"
         android:textColor="#fff"
         android:layout_below="@id/tvTaskDescription"
-        tools:text="Task Category" />
+        android:text="Task Category" />
 
-    <TextView
-        android:id="@+id/tvTaskDateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvTaskCategory"
-        android:layout_margin="5dp"
-        android:padding="3dp"
-        android:textColor="#fff"
-        android:fontFamily="@font/roboto_medium"
-        android:drawableStart="@drawable/ic_date"
-        android:background="#BC0404"
-        tools:text="Task Date and Time" />
+        <TextView
+            android:id="@+id/tvTaskDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTaskCategory"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#BC0404"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="3dp"
+            android:text="Task Date and Time"
+            android:textColor="#fff" />
 
     <Button
         android:id="@+id/btnUpdateTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/tvTaskName"
+        android:layout_below="@id/tvTaskDateTime"
         android:text="Update"
         android:backgroundTint="#FF9800"
         android:drawableEnd="@drawable/ic_update"
@@ -66,10 +77,12 @@
         android:id="@+id/btnDeleteTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/btnUpdateTask"
+        android:layout_below="@+id/tvTaskDateTime"
+        android:layout_toRightOf="@id/btnUpdateTask"
         android:text="Delete"
         android:backgroundTint="#FF9800"
         android:drawableEnd="@drawable/ic_delete"
-        android:layout_marginTop="8dp"/>
-</RelativeLayout>
+        android:layout_marginLeft="20dp"
+        />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

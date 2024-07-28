@@ -1,8 +1,14 @@
 package com.example.mytodo;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,10 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddTask extends AppCompatActivity {
 
@@ -28,7 +35,11 @@ public class AddTask extends AppCompatActivity {
     private Calendar selectedDate, selectedTime;
 
     private FirebaseAuth auth;
-    private DatabaseReference tasksDatabase;
+    private FirebaseFirestore firestore;
+    private String taskId;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,28 +57,37 @@ public class AddTask extends AppCompatActivity {
         btnSaveTask = findViewById(R.id.btnSaveTask);
 
         auth = FirebaseAuth.getInstance();
-        tasksDatabase = FirebaseDatabase.getInstance().getReference("Tasks").child(auth.getCurrentUser().getUid());
+        firestore = FirebaseFirestore.getInstance();
 
-        btnSelectDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectDate();
-            }
-        });
+        btnSelectDate.setOnClickListener(v -> selectDate());
+        btnSelectTime.setOnClickListener(v -> selectTime());
+        btnSaveTask.setOnClickListener(v -> saveTask());
 
-        btnSelectTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectTime();
-            }
-        });
+        // Check if this activity was started with task data
+        if (getIntent().hasExtra("taskId")) {
+            taskId = getIntent().getStringExtra("taskId");
+            String taskName = getIntent().getStringExtra("taskName");
+            String taskDescription = getIntent().getStringExtra("taskDescription");
+            String taskCategory = getIntent().getStringExtra("taskCategory");
+            long taskDate = getIntent().getLongExtra("taskDate", 0);
+            long taskTime = getIntent().getLongExtra("taskTime", 0);
+            boolean taskReminder = getIntent().getBooleanExtra("taskReminder", false);
 
-        btnSaveTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveTask();
-            }
-        });
+            // Populate the fields with the existing task data
+            etTaskName.setText(taskName);
+            etTaskDescription.setText(taskDescription);
+            etTaskCategory.setText(taskCategory);
+            switchReminder.setChecked(taskReminder);
+
+            // Set the selected date and time
+            selectedDate = Calendar.getInstance();
+            selectedDate.setTimeInMillis(taskDate);
+            tvSelectedDate.setText(dateFormat.format(selectedDate.getTime()));
+
+            selectedTime = Calendar.getInstance();
+            selectedTime.setTimeInMillis(taskTime);
+            tvSelectedTime.setText(timeFormat.format(selectedTime.getTime()));
+        }
     }
 
     private void selectDate() {
@@ -76,7 +96,7 @@ public class AddTask extends AppCompatActivity {
                 (view, year, month, dayOfMonth) -> {
                     selectedDate = Calendar.getInstance();
                     selectedDate.set(year, month, dayOfMonth);
-                    tvSelectedDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                    tvSelectedDate.setText(dateFormat.format(selectedDate.getTime()));
                 },
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
@@ -89,9 +109,9 @@ public class AddTask extends AppCompatActivity {
                     selectedTime = Calendar.getInstance();
                     selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     selectedTime.set(Calendar.MINUTE, minute);
-                    tvSelectedTime.setText(hourOfDay + ":" + String.format("%02d", minute));
+                    tvSelectedTime.setText(timeFormat.format(selectedTime.getTime()));
                 },
-                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
         timePickerDialog.show();
     }
 
@@ -101,19 +121,19 @@ public class AddTask extends AppCompatActivity {
         String taskCategory = etTaskCategory.getText().toString().trim();
         boolean setReminder = switchReminder.isChecked();
 
-        if (taskName.isEmpty()) {
+        if (TextUtils.isEmpty(taskName)) {
             etTaskName.setError("Task name is required");
             etTaskName.requestFocus();
             return;
         }
 
-        if (taskDescription.isEmpty()) {
+        if (TextUtils.isEmpty(taskDescription)) {
             etTaskDescription.setError("Task description is required");
             etTaskDescription.requestFocus();
             return;
         }
 
-        if (taskCategory.isEmpty()) {
+        if (TextUtils.isEmpty(taskCategory)) {
             etTaskCategory.setError("Task category is required");
             etTaskCategory.requestFocus();
             return;
@@ -129,17 +149,42 @@ public class AddTask extends AppCompatActivity {
             return;
         }
 
-        String taskId = tasksDatabase.push().getKey();
+        String userId = auth.getCurrentUser().getUid();
+        if (taskId == null) {
+            taskId = firestore.collection("users").document(userId).collection("tasks").document().getId();
+        }
+
         Task task = new Task(taskId, taskName, taskDescription, taskCategory, selectedDate.getTimeInMillis(), selectedTime.getTimeInMillis(), setReminder);
 
-        tasksDatabase.child(taskId).setValue(task)
+        firestore.collection("users").document(userId).collection("tasks").document(taskId)
+                .set(task)
                 .addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
-                        Toast.makeText(AddTask.this, "Task added successfully", Toast.LENGTH_SHORT).show();
+                        if (setReminder) {
+                            setTaskReminder(task);
+                        }
+                        Toast.makeText(AddTask.this, "Task saved successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddTask.this, HomePage.class);
+                        startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(AddTask.this, "Failed to add task", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTask.this, "Failed to save task", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void setTaskReminder(Task task) {
+        long reminderTime = task.getTaskTime(); // Use taskDate or taskTime depending on your requirement
+
+        Intent intent = new Intent(this, TaskAlarmReceiver.class);
+        intent.putExtra("taskName", task.getTaskName());
+        intent.putExtra("taskDescription", task.getTaskDescription());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, task.getTaskId().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTime, pendingIntent);
+        }
     }
 }
